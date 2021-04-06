@@ -1,13 +1,12 @@
 # qa_engineer_project
 
 Setup:
- 
- -Language and Tools
-    Java 1.8.0_202
-    Oracle's free openjdk-16
-    Maven JUnit 4.13.2
- -IDE
-    IntelliJ Community Addition
+ *Language and Tools
+    *Java 1.8.0_202
+    *Oracle's free openjdk-16
+    *Maven JUnit 4.13.2
+  *IDE
+    *IntelliJ Community Addition
     
 How to run project:
 
