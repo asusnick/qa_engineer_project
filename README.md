@@ -2,7 +2,7 @@
 
 Setup:
 
-*Language and Tools
+* Language and Tools
    
 	*Java 1.8.0_202
    
@@ -10,7 +10,7 @@ Setup:
    
 	*Maven JUnit 4.13.2
 
-*IDE
+* IDE
    
 	*IntelliJ Community Addition
     
