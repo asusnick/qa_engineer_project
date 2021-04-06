@@ -1,5 +1,13 @@
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggingEvent;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculationsTest {
@@ -10,6 +18,10 @@ public class CalculationsTest {
     public void setUp(){
         calculations.CalculateDogSizeFoodNeeds(5, 3, 7);
         calculations.CalculateNetLbsEOM(17);
+    }
+
+    @AfterEach
+    public void tearDown() {
     }
 
     @Test
@@ -24,7 +36,6 @@ public class CalculationsTest {
         assertNotNull(actual);
         assertEquals(expected, actual);
     }
-
 
     @Test
     void calculateDogSizeFoodNeedsTest_InvalidInputs_ThrowsException() {
@@ -59,12 +70,15 @@ public class CalculationsTest {
     }
 
     @Test
-    void calculateNetLbsEOM_InvalidInputs_ThrowsException() {
+    void calculateNetLbsEOM_InvalidInput_ThrowsException() {
         var invalidNum = -2;
         Exception invalidNumException = assertThrows(NumberFormatException.class, () ->
                 calculations.CalculateNetLbsEOM(invalidNum));
         assertEquals("Please provide a valid number", invalidNumException.getMessage());
+    }
 
+    @Test
+    void calculateNetLbsEOM_NullInput_ThrowsException() {
         Exception nullException = assertThrows(NumberFormatException.class, () ->
                 calculations.CalculateNetLbsEOM(null));
         assertEquals("Please provide a valid number", nullException.getMessage());
@@ -80,6 +94,17 @@ public class CalculationsTest {
 
         //Then
         assertNotEquals(expected, actual);
+    }
+
+    @Test
+    void calculateNetLbsEOM_ZeroFoodRemaining_ReturnsWarningMessage() {
+        TestAppender testAppender = new TestAppender();
+
+        Logger.getRootLogger().addAppender(testAppender);
+        calculations.CalculateNetLbsEOM(0);
+        LoggingEvent loggingEvent = testAppender.events.get(0);
+        assertEquals("You do not have any food remaining this month"
+                ,loggingEvent.getMessage().toString());
     }
 
     @Test
@@ -105,5 +130,15 @@ public class CalculationsTest {
 
         //Then
         assertNotEquals(expected, actual);
+    }
+
+    private static class TestAppender extends AppenderSkeleton{
+        public List<LoggingEvent> events = new ArrayList<LoggingEvent>();
+        public void close() {}
+        public boolean requiresLayout() {return false;}
+        @Override
+        protected void append(LoggingEvent event) {
+            events.add(event);
+        }
     }
 }

@@ -1,3 +1,5 @@
+import org.apache.log4j.Logger;
+
 public class Calculations {
     //declarations
     static int smallDogFoodNeeds = 10, mediumDogFoodNeeds = 20, largeDogFoodNeeds = 30;
@@ -7,6 +9,9 @@ public class Calculations {
     static int totalLbsOfDogFoodUsed;
     static int netLbsEOM;
 
+    //create logger
+    Logger logger = Logger.getLogger(Calculations.class.getName());
+
     //functions
     public int CalculateDogSizeFoodNeeds(Integer smallDogs, Integer mediumDogs, Integer largeDogs) {
         Integer[] dogs = { smallDogs, mediumDogs, largeDogs };
@@ -15,7 +20,6 @@ public class Calculations {
                 throw new NumberFormatException("Please provide a valid number");
             }
         }
-
         lbsOfSmallDogFood = smallDogs * smallDogFoodNeeds;
         lbsOfMediumDogFood = mediumDogs * mediumDogFoodNeeds;
         lbsOfLargeDogFood = largeDogs * largeDogFoodNeeds;
@@ -24,11 +28,12 @@ public class Calculations {
     }
 
     public int CalculateNetLbsEOM(Integer lbsFoodRemainingEOM) {
-        if(lbsFoodRemainingEOM == null || lbsFoodRemainingEOM < 0) {
+        if (lbsFoodRemainingEOM == null || lbsFoodRemainingEOM < 0) {
             throw new NumberFormatException("Please provide a valid number");
-        } else {
-            return netLbsEOM = totalLbsOfDogFoodUsed - lbsFoodRemainingEOM;
+        } else if (lbsFoodRemainingEOM == 0) {
+            logger.info("You do not have any food remaining this month");
         }
+        return netLbsEOM = totalLbsOfDogFoodUsed - lbsFoodRemainingEOM;
     }
 
     public double CalculateTotalAmountOfFoodToOrder() {
