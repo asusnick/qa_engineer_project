@@ -1,0 +1,8 @@
+QUESTIONS (or thoughts):
+
+-I spent ~6 hours on this project but if I had more time, I'd like to refactor the code a little more to make it cleaner and more reusable.
+-I started out with UserInput to make it easier to see if my logic was correct. Removing UserInput made the code cleaner and I was able to include validation and test cases at a lower level.
+-If this app was more built out, cases I'd like to test:
+  -Are we only accepting dogs? If so, we will need validation and testing around the kind of animals the shelter accepts and currently has.
+  -What happens after we reach 30 dogs? Will our app crash? Can we accept 30+ dogs and do we have a budget to pull from? Will our app tell us if we are over-budget?
+  -If there is a user interface, there will be inputs and I'd like to write SQL injections and cross-site scripting tests. Also, I could test character limitations.
